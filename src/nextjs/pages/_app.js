@@ -1,5 +1,8 @@
 import "../styles/globals.css";
+import { hydrateRoot } from "react-dom/client";
+
 import { useState, useEffect } from "react";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function MyApp({ Component, pageProps }) {
   const [liffObject, setLiffObject] = useState(null);
@@ -32,7 +35,11 @@ function MyApp({ Component, pageProps }) {
   // to page component as property
   pageProps.liff = liffObject;
   pageProps.liffError = liffError;
-  return <Component {...pageProps} />;
+  return (
+    <ChakraProvider>
+      <Component {...pageProps} />
+    </ChakraProvider>
+  )
 }
 
 export default MyApp;
