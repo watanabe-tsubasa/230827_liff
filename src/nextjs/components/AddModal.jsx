@@ -1,19 +1,25 @@
 import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react"
-import React, { useRef } from "react"
+import React, { useState } from "react"
 import { timestamp } from "../utils/timestamp"
+import { TempSlider } from "./atoms/TempSlider"
+import { useCommonToast } from "./Hooks/CommonToast"
 
 export const AddModal = (props) => {
   const { isOpen, onClose } = props
-  const initialRef = useRef(null)
+
+  const [sliderVal, setSliderValue] = useState(36.2);
+  const showToast = useCommonToast({
+    title: "登録しました",
+    description: `体温: ${timestamp()}, ${sliderVal}度`,
+  });
   const onClickResiter = () => {
-    alert(`${timestamp()}, ${initialRef.current.value}`)
+    showToast();
     onClose()
   }
 
   return (
     <>
       <Modal
-        initialFocusRef={initialRef}
         isOpen={isOpen}
         onClose={onClose}
       >
@@ -24,7 +30,7 @@ export const AddModal = (props) => {
           <ModalBody pb={6}>
             <FormControl>
               <FormLabel>体温</FormLabel>
-              <Input ref={initialRef} placeholder='体温' />
+              <TempSlider onValueChange={setSliderValue} />
             </FormControl>
           </ModalBody>
 
