@@ -21,7 +21,7 @@ export const ClickIcon = (props) => {
       <VStack>
         <Image
           borderRadius='full'
-          boxSize='130'
+          boxSize='100'
           src={'/' + fileName}
           alt={id}
           shadow='lg'
