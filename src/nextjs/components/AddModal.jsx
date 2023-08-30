@@ -3,18 +3,28 @@ import React, { useState } from "react"
 import { timestamp } from "../utils/timestamp"
 import { TempSlider } from "./atoms/TempSlider"
 import { useCommonToast } from "./Hooks/CommonToast"
+import { postLineRecord } from "../utils/postLineRecord"
 
 export const AddModal = (props) => {
   const { isOpen, onClose } = props
 
   const [sliderVal, setSliderValue] = useState(36.2);
-  const showToast = useCommonToast({
-    title: "登録しました",
-    description: `体温: ${timestamp()}, ${sliderVal}度`,
-  });
-  const onClickResiter = () => {
-    showToast();
-    onClose()
+  const showToast = useCommonToast();
+  const onClickResiter = async () => {
+    try {
+      await postLineRecord('testId', '体温', `${sliderVal}`)
+      showToast({
+        title: `登録：${timestamp()}`,
+        description: `体温 ${sliderVal}度`,
+      });
+    } catch {
+      showToast({
+        title: "登録に失敗しました",
+        status: "error",
+        description: 'ネットワーク状況を確認してください'
+      }); 
+    }
+    onClose();
   }
 
   return (

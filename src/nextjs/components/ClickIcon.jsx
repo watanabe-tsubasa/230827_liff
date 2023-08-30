@@ -1,22 +1,33 @@
 import React from "react";
-import { Box, Image, Text, VStack, useDisclosure, useToast } from "@chakra-ui/react";
+import { Box, Image, Text, VStack, useDisclosure } from "@chakra-ui/react";
 import { AddModal } from "./AddModal";
 import { timestamp } from "../utils/timestamp";
 import { useCommonToast } from "./Hooks/CommonToast";
+import { postLineRecord } from "../utils/postLineRecord";
+
 
 export const ClickIcon = (props) => {
   
   const { id, iconName, fileName} = props;
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const showToast = useCommonToast({
-    title: "登録しました",
-    description: `${iconName}: ${timestamp()}`,
-  });
-  const onClickIcon = () => {
+  const showToast = useCommonToast();
+  const onClickIcon = async () => {
     if (id === 'body_temp') { 
       onOpen(); 
     } else {
-      showToast(); 
+      try {
+        await postLineRecord('testId', iconName)
+        showToast({
+          title: `登録：${timestamp()}`,
+          description: `${iconName}`,
+        });
+      } catch {
+        showToast({
+          title: "登録に失敗しました",
+          status: "error",
+          description: 'ネットワーク状況を確認してください'
+        }); 
+      }
     }
   }
 

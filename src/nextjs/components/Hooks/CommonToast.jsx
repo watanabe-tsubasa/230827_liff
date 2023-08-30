@@ -1,16 +1,16 @@
 import { useToast } from "@chakra-ui/react";
 
-export const useCommonToast = ({
-  title = "Default Title",
-  description = "Default Description",
-  status = "success",
-  duration = 9000,
-  isClosable = true,
-  position = "top",
-} = {}) => {
+export const useCommonToast = () => {
   const toast = useToast();
 
-  const showToast = () => {
+  const showToast = ({
+    title = "Default Title",
+    description = "Default Description",
+    status = "success",
+    duration = 4000,
+    isClosable = true,
+    position = "top",
+  } = {}) => {
     toast({
       title,
       description,
