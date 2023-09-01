@@ -1,8 +1,9 @@
 import "../styles/globals.css";
-import { hydrateRoot } from "react-dom/client";
-
 import { useState, useEffect } from "react";
 import { ChakraProvider } from "@chakra-ui/react";
+import { LiffContext } from "../components/contexts/LiffContext";
+import { config } from "dotenv";
+config();
 
 function MyApp({ Component, pageProps }) {
   const [liffObject, setLiffObject] = useState(null);
@@ -14,14 +15,14 @@ function MyApp({ Component, pageProps }) {
     import("@line/liff").then((liff) => {
       console.log("start liff.init()...");
       liff
-        .init({ liffId: process.env.LIFF_ID })
+        .init({ liffId: process.env.LIFF_ID , withLoginOnExternalBrowser:true})
         .then(() => {
-          console.log("liff.init() done");
+          console.log("liff.init() done", );
           setLiffObject(liff);
         })
         .catch((error) => {
           console.log(`liff.init() failed: ${error}`);
-          if (!process.env.liffId) {
+          if (!process.env.LIFF_ID) {
             console.info(
               "LIFF Starter: Please make sure that you provided `LIFF_ID` as an environmental variable."
             );
@@ -31,13 +32,11 @@ function MyApp({ Component, pageProps }) {
     });
   }, []);
 
-  // Provide `liff` object and `liffError` object
-  // to page component as property
-  pageProps.liff = liffObject;
-  pageProps.liffError = liffError;
   return (
     <ChakraProvider>
-      <Component {...pageProps} />
+      <LiffContext.Provider value={{liff: liffObject, liffError: liffError}}>
+        <Component {...pageProps}/>
+      </LiffContext.Provider>
     </ChakraProvider>
   )
 }

@@ -1,10 +1,8 @@
 import { Box, Flex } from "@chakra-ui/react";
-import React from "react";
 import { ClickIcon } from "./ClickIcon";
 import { iconData } from "../utils/icons";
 
 export const IconContainer = () => {
-
   return(
     <Box>
       <Flex

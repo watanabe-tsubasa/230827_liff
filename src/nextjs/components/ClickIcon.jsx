@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Box, Image, Text, VStack, useDisclosure } from "@chakra-ui/react";
 import { AddModal } from "./AddModal";
 import { timestamp } from "../utils/timestamp";
 import { useCommonToast } from "./Hooks/CommonToast";
 import { postLineRecord } from "../utils/postLineRecord";
 
-
 export const ClickIcon = (props) => {
-  
-  const { id, iconName, fileName} = props;
+
+  const { id, iconName, fileName } = props;
   const { isOpen, onOpen, onClose } = useDisclosure()
   const showToast = useCommonToast();
+
   const onClickIcon = async () => {
+    
     if (id === 'body_temp') { 
       onOpen(); 
     } else {

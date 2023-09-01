@@ -68,3 +68,12 @@ You can also check official site before you trying it.
 
 https://liff-starter.netlify.app
 
+## 通常では動かない
+
+```bash
+volta pin node@16.20.2
+```
+
+これが必要かもしれない。
+でもyarnもReactもNextも全部最新にアップデートしたら、最新のnodeで動いたからいらないかも。
+nodeのバージョン古いとfetchをnode.jsで使えないし。
