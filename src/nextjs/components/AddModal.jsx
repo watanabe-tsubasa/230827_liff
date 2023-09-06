@@ -1,20 +1,23 @@
 import { Button, FormControl, FormLabel, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay } from "@chakra-ui/react"
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { timestamp } from "../utils/timestamp"
 import { TempSlider } from "./atoms/TempSlider"
 import { useCommonToast } from "./Hooks/CommonToast"
 import { postLineRecord } from "../utils/postLineRecord"
+import { LiffContext } from "./contexts/LiffContext"
 
 export const AddModal = (props) => {
   const { isOpen, onClose } = props
+
+  const { lineId } = useContext(LiffContext);
 
   const [sliderVal, setSliderValue] = useState(36.2);
   const showToast = useCommonToast();
   const onClickResiter = async () => {
     try {
-      await postLineRecord('testId', '体温', `${sliderVal}`)
+      await postLineRecord(lineId, '体温', `${sliderVal}`)
       showToast({
-        title: `登録：${timestamp()}`,
+        title: `登録：${timestamp()}, ${lineId}`,
         description: `体温 ${sliderVal}度`,
       });
     } catch {

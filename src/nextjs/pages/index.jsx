@@ -1,5 +1,4 @@
 import Head from "next/head";
-import packageJson from "../package.json";
 import { IconContainer } from "../components/IconContainer";
 import { Box } from "@chakra-ui/react";
 import { LiffContext } from "../components/contexts/LiffContext";
@@ -14,13 +13,8 @@ export default function Home(props) {
    *  Learn more about LIFF API documentation (https://developers.line.biz/en/reference/liff)
    **/
 
-  const { liff, liffError } = useContext(LiffContext)
-  useEffect(() => {
-    liff.getProfile().then(profile => {
-      console.log(profile.userId);
-    })
-  }, [])
-
+  // const { liff, liffError } = useContext(LiffContext)
+  
   return (
     <Box bg='blackAlpha.50'>
       <Head>

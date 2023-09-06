@@ -1,11 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Box, Image, Text, VStack, useDisclosure } from "@chakra-ui/react";
 import { AddModal } from "./AddModal";
 import { timestamp } from "../utils/timestamp";
 import { useCommonToast } from "./Hooks/CommonToast";
 import { postLineRecord } from "../utils/postLineRecord";
+import { LiffContext } from "./contexts/LiffContext";
 
 export const ClickIcon = (props) => {
+  
+  const { lineId } = useContext(LiffContext);
 
   const { id, iconName, fileName } = props;
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -17,9 +20,9 @@ export const ClickIcon = (props) => {
       onOpen(); 
     } else {
       try {
-        await postLineRecord('testId', iconName)
+        await postLineRecord(lineId, iconName)
         showToast({
-          title: `登録：${timestamp()}`,
+          title: `登録：${timestamp()}, ${lineId}`,
           description: `${iconName}`,
         });
       } catch {
